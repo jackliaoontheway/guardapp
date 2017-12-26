@@ -14,15 +14,20 @@ export class HomeComponent implements OnInit , OnDestroy {
   private interval = null;
 
   play: boolean;
+  play2: boolean;
 
   listenRFID() {
     console.log('read rfid...');
     this.guardService.readRFID().subscribe((response) => {
       const hasData = JSON.parse(JSON.stringify(response)).hasData;
+      const allPaided = JSON.parse(JSON.stringify(response)).allPaided;
       if (hasData) {
         this.play = true;
-      } else {
+      } else if (allPaided) {
+        this.play2 = true;
+      }else {
         this.play = false;
+        this.play2 = false;
       }
     });
   }
@@ -32,6 +37,8 @@ export class HomeComponent implements OnInit , OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.play = false;
+    this.play2 = false;
     clearInterval(this.interval);
   }
 
