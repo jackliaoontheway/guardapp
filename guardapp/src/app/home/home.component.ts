@@ -19,7 +19,8 @@ export class HomeComponent implements OnInit , OnDestroy {
   processed: boolean;
 
   listenRFID() {
-    if(this.processed) {
+    if (this.processed) {
+      console.log('in processing...');
       return;
     }
     this.processed = true;
@@ -51,7 +52,7 @@ export class HomeComponent implements OnInit , OnDestroy {
   }
 
   ngOnInit() {
-    this.interval = setInterval( () => { this.listenRFID(); }, 3000);
+    this.interval = setInterval( () => { this.listenRFID(); }, 1000);
   }
 
   ngOnDestroy(): void {
