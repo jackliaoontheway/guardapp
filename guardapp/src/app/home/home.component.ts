@@ -16,18 +16,36 @@ export class HomeComponent implements OnInit , OnDestroy {
   play: boolean;
   play2: boolean;
 
+  processed: boolean;
+
   listenRFID() {
+    if(this.processed) {
+      return;
+    }
+    this.processed = true;
     console.log('read rfid...');
     this.guardService.readRFID().subscribe((response) => {
       const hasData = JSON.parse(JSON.stringify(response)).hasData;
       const allPaided = JSON.parse(JSON.stringify(response)).allPaided;
       if (hasData) {
         this.play = true;
+        console.log('has data');
+        setTimeout(() => {
+          this.play = false;
+          this.processed = false;
+        }, 4000);
       } else if (allPaided) {
         this.play2 = true;
-      }else {
+        console.log('all paided');
+        setTimeout(() => {
+          this.play2 = false;
+          this.processed = false;
+        }, 5000);
+      } else {
         this.play = false;
         this.play2 = false;
+        this.processed = false;
+        console.log('else ....');
       }
     });
   }
