@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router , ActivatedRoute } from '@angular/router';
 import { GuardService } from '../services/guard.service';
+import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +34,9 @@ export class HomeComponent implements OnInit , OnDestroy {
         console.log('has data');
         setTimeout(() => {
           this.play = false;
-          this.processed = false;
+          setTimeout(() => {
+            this.processed = false;
+          },5000);
         }, 4000);
       } else if (allPaided) {
         this.play2 = true;
